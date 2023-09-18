@@ -80,7 +80,7 @@ class Home(BoxLayout):
             else self.config.get("database_password")
         db_name = self.config.get("database_name")
         try:
-            connection = pymysql.connect(host=host, port=port, user=user, password=password, db=db_name)
+            connection = pymysql.connect(host=host, port=int(port), user=user, password=password, db=db_name)
 
             # Create a cursor
             cursor = connection.cursor()

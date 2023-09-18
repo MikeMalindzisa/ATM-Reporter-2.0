@@ -79,7 +79,8 @@ class DataTableLayout(BoxLayout):
                 else self.config.get("database_password")
             db_name = self.config.get("database_name")
             try:
-                connection = pymysql.connect(host=host, port=port, user=user, password=password, db=db_name)
+                connection = pymysql.connect(host=host, port=int(port),
+                                             user=user, password=password, db=db_name)
                 cursor = connection.cursor()
                 if (
                         self.rfilter_screen.ids.start_date.text != "Select Start Date" and

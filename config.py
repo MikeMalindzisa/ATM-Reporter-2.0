@@ -149,7 +149,8 @@ def process_file(file_path):
                     else config_p.get("database_password")
                 db_name = config_p.get("database_name")
 
-                connection = pymysql.connect(host=db_host, port=db_port, user=db_user, password=db_password, db=db_name)
+                connection = pymysql.connect(host=db_host, port=int(db_port),
+                                             user=db_user, password=db_password, db=db_name)
 
                 # Create a cursor
                 cursor = connection.cursor()
@@ -380,13 +381,15 @@ class ConfigReader:
         print(f"Here: {sys_conf}")
         # Get database connection parameters from the config dictionary
         host = sys_conf.get("database_host")
+        port = sys_conf.get("database_port")
         user = sys_conf.get("database_user")
         password = sys_conf.get("database_password")
         db_name = sys_conf.get("database_name")
 
         try:
             # Create a database connection
-            connection = pymysql.connect(host=f"{host}", user=f"{user}", password=password, db=f"{db_name}")
+            connection = pymysql.connect(host=f"{host}", port=int(port),
+                                         user=f"{user}", password=password, db=f"{db_name}")
             cursor = connection.cursor()
             return connection, cursor, f"Database connection successful."
         except Exception as e:
