@@ -71,14 +71,15 @@ class DataTableLayout(BoxLayout):
 
         def execute_query(dt):
             global report_data
+
+            host = self.config.get("database_host")
+            user = self.config.get("database_user")
+            port = self.config.get("database_port")
+            password = "" if self.config.get("database_password") is None \
+                else self.config.get("database_password")
+            db_name = self.config.get("database_name")
             try:
-                db_host = self.config.get("database_host")
-                db_user = self.config.get("database_user")
-                db_password = "" if self.config.get("database_password") is None \
-                    else self.config.get("database_password")
-                db_name = self.config.get("database_name")
-                # Create a database connection
-                connection = pymysql.connect(host=db_host, user=db_user, password=db_password, db=db_name)
+                connection = pymysql.connect(host=host, port=port, user=user, password=password, db=db_name)
                 cursor = connection.cursor()
                 if (
                         self.rfilter_screen.ids.start_date.text != "Select Start Date" and

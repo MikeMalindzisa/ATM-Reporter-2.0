@@ -144,11 +144,12 @@ def process_file(file_path):
                 # Create a database connection
                 db_host = config_p.get("database_host")
                 db_user = config_p.get("database_user")
+                db_port = config_p.get("database_port")
                 db_password = "" if config_p.get("database_password") is None \
                     else config_p.get("database_password")
                 db_name = config_p.get("database_name")
 
-                connection = pymysql.connect(host=db_host, user=db_user, password=db_password, db=db_name)
+                connection = pymysql.connect(host=db_host, port=db_port, user=db_user, password=db_password, db=db_name)
 
                 # Create a cursor
                 cursor = connection.cursor()
