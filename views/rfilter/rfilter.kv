@@ -1,0 +1,102 @@
+<RFilterScreen>:
+    id: rfilter_screen
+    padding: dp(14)
+    spacing: dp(16)
+    BoxLayout:
+        spacing: dp(16)
+        orientation: 'vertical'
+        size_hint_x: .99
+        BoxLayout:
+            spacing: dp(16)
+            size_hint_y: .2
+            ShadowBox:
+                radius: [dp(14)]
+                elevation: 2
+                padding: dp(14)
+                orientation: 'vertical'
+                spacing: dp(8)
+                BoxLayout:
+                    spacing: dp(14)
+                    size_hint_y: .1
+                    AnchorLayout:
+                        size_hint_x: None
+                        width: self.height
+                        IconButton:
+                            source: 'assets/icons/ic_calendar.png'
+                BoxLayout:
+                    orientation: 'horizontal'
+                    spacing: dp(8)
+                    size_hint_y: .1
+                    MDRaisedButton:
+                        text: "Select Start Date"
+                        id: start_date
+                        on_release: root.select_start_date()
+
+                    MDRaisedButton:
+                        text: "Select End Date"
+                        id: end_date
+                        on_release: root.select_end_date()
+                BoxLayout:
+                    size_hint_y: None
+                    height: dp(24)
+                    spacing: dp(8)
+                    Text:
+                        text: 'Select start and end date then click generate report.'
+                        color: app.colors.grey_dark
+                        font_name: app.fonts.body
+                        font_size: app.fonts.size.h6
+                        size_hint_x: .75
+                    MDRaisedButton:
+                        size_hint_x: .25
+                        padding: [dp(4), dp(2)]
+                        id: gen_report_btn
+                        disabled: True
+                        text: 'Generate Report'
+                        on_release: root.ids.reports_table_layout.filter_data()
+
+        BoxLayout:
+            spacing: dp(8)
+            size_hint_y: .5
+            orientation: 'vertical'
+            ShadowBox:
+                radius: [dp(14)]
+                elevation: 1
+                orientation: 'vertical'
+                spacing: dp(8)
+                padding: dp(12)
+                BoxLayout:
+                    spacing: dp(8)
+                    size_hint_y: None
+                    height: dp(72)
+                    BoxLayout:
+                        orientation: 'vertical'
+                        spacing: dp(8)
+                        size_hint_x: .8
+                        Text:
+                            text: 'ATM Reports As AT'
+                            font_size: app.fonts.size.h2
+                            color: app.colors.secondary
+                            font_name: app.fonts.heading
+                            size_hint_y: None
+                            height: dp(24)
+                        Text:
+                            id: date_range
+                            text: 'asasasasas'
+                            font_size: app.fonts.size.h6
+                            color: app.colors.secondary
+                            font_name: app.fonts.subheading
+                            height: dp(24)
+
+                        MDRaisedButton:
+                            id: export_xlsx_btn
+                            size_hint_y: None
+                            height: dp(24)
+                            padding: [dp(4), dp(2)]
+                            disabled: True
+                            text: 'Export Excel'
+                            on_release: root.export_excel_file()
+                    AnchorLayout:
+                        size_hint_x: .2
+                DataTableLayout:
+                    id: reports_table_layout
+                    rfilter_screen: rfilter_screen

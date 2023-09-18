@@ -1,0 +1,211 @@
+<SettingsScreen>:
+    id: settings_screen
+    BoxLayout:
+        orientation: 'vertical'
+        padding: "14dp"
+        spacing: "16dp"
+
+        MDCard:
+            orientation: "vertical"
+            padding: "14dp"
+            spacing: "8dp"
+            radius: [14]
+
+            MDLabel:
+                text: "Database Configuration"
+                font_size: "18sp"
+                bold: True
+
+            GridLayout:
+                cols: 3
+                spacing: "8dp"
+
+                MDTextField:
+                    hint_text: "Database Host"
+                    id: db_host
+                    multiline: False
+                    disabled: default_config.active
+                    icon_left: "server-network"
+
+                MDTextField:
+                    hint_text: "Database Port"
+                    id: db_port
+                    multiline: False
+                    input_filter: "int"
+                    disabled: default_config.active
+                    icon_left: "numeric"
+
+                MDTextField:
+                    hint_text: "Database Name"
+                    id: db_name
+                    multiline: False
+                    disabled: default_config.active
+                    icon_left: "database"
+
+                MDTextField:
+                    hint_text: "Database User"
+                    id: db_user
+                    multiline: False
+                    disabled: default_config.active
+                    icon_left: "account-network"
+
+                MDTextField:
+                    hint_text: "Database Password"
+                    id: db_pass
+                    multiline: False
+                    disabled: default_config.active
+                    icon_left: "security-network"
+
+        MDCard:
+            orientation: "vertical"
+            padding: "14dp"
+            spacing: "8dp"
+            radius: [14]
+
+            MDLabel:
+                text: "Working Directories"
+                font_size: "18sp"
+                bold: True
+
+            GridLayout:
+                cols: 3
+                spacing: "8dp"
+
+                MDTextField:
+                    hint_text: "Source Folder"
+                    id: source_folder
+                    multiline: False
+                    disabled: default_config.active
+                    icon_left: "folder-arrow-right"
+
+                MDTextField:
+                    hint_text: "Reports Folder"
+                    id: reports_folder
+                    multiline: False
+                    disabled: default_config.active
+                    icon_left: "folder-file"
+
+                MDTextField:
+                    hint_text: "Archive Folder"
+                    id: archive_folder
+                    multiline: False
+                    disabled: default_config.active
+                    icon_left: "folder-zip"
+    BoxLayout:
+        spacing: dp(16)
+        orientation: 'vertical'
+        size_hint_x: .75
+        BoxLayout:
+            spacing: dp(16)
+            size_hint_y: .2
+            ShadowBox:
+                radius: [dp(14)]
+                elevation: 2
+                padding: dp(14)
+                orientation: 'vertical'
+                spacing: dp(8)
+                BoxLayout:
+                    spacing: dp(14)
+                    AnchorLayout:
+                        size_hint_x: None
+                        width: self.height
+                        IconButton:
+                            source: 'assets/icons/ic_power_active.png'
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        spacing: dp(8)
+                        MDLabel:
+                            text: 'Watchdog Status'
+                            font_name: app.fonts.heading
+                            font_size: app.fonts.size.h3
+                            color: app.colors.grey_dark
+                        MDLabel:
+                            id: watchdog_service_status
+                            text: '(Offline)'
+                            font_name: app.fonts.heading
+                            font_size: app.fonts.size.h3
+                            color: app.colors.secondary
+                BoxLayout:
+                    orientation: 'horizontal'
+                    spacing: dp(8)
+                    Text:
+                        text: 'Watch Folder'
+                        font_name: app.fonts.body
+                        font_size: app.fonts.size.h3
+                        color: app.colors.grey_dark
+                    Text:
+                        id: curr_watch_folder
+                        text: root.ids.source_folder.text
+                        font_name: app.fonts.body
+                        font_size: app.fonts.size.h3
+                        color: app.colors.grey_dark
+                BoxLayout:
+                    orientation: 'horizontal'
+                    spacing: "8dp"
+
+                    MDFillRoundFlatIconButton:
+                        id: watchdog_service_start
+                        icon: "assets/icons/ic_power_on.png"
+                        text: "Start Service"
+                        on_release: root.start_watchdog_service()
+                        md_bg_color: app.colors.success
+
+                    MDFillRoundFlatIconButton:
+                        id: watchdog_service_stop
+                        icon: "assets/icons/ic_power.png"
+                        text: "Stop Service"
+                        md_bg_color: app.colors.warning
+                        disabled: True
+                        on_release: root.stop_watchdog_service()
+        BoxLayout:
+            spacing: dp(16)
+            orientation: 'vertical'
+            BoxLayout:
+                spacing: dp(16)
+                size_hint_y: .2
+                ShadowBox:
+                    radius: [dp(14)]
+                    elevation: 2
+                    padding: dp(14)
+                    orientation: 'vertical'
+                    spacing: dp(8)
+                    BoxLayout:
+                        spacing: dp(14)
+                        AnchorLayout:
+                            size_hint_x: None
+                            width: self.height
+                            IconButton:
+                                source: 'assets/icons/ic_settings_default.png'
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            spacing: dp(8)
+                            Text:
+                                text: "Use Default Configurations"
+                                font_name: app.fonts.body
+                                font_size: app.fonts.size.h3
+                                color: app.colors.grey_dark
+                            MDCheckbox:
+                                id: default_config
+                                group: "config"
+                                on_active: root.toggle_default_config(self.active)
+                                active: False
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        spacing: "8dp"
+
+                        MDRaisedButton:
+                            text: "Save Configuration"
+                            on_release: root.save_configuration()
+
+                        MDRaisedButton:
+                            text: "Test Connection"
+                            on_release: root.test_database_connection()
+
+            MDCard:
+                orientation: "vertical"
+                padding: "14dp"
+                spacing: "8dp"
+                radius: [14]
+                AnchorLayout:
+                    orientation: 'horizontal'
+                    spacing: "8dp"

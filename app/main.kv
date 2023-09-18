@@ -1,0 +1,211 @@
+#:import IconButton widgets.buttons.IconButton
+#:import Text widgets.labels.Text
+#:import ShadowBox widgets.shadow.ShadowBox
+
+#: import Home views.home.Home
+#: import Home views.reports.ReportsScreen
+#: import Home views.sources.SourcesScreen
+#: import Home views.archives.ArchivesScreen
+#: import Home views.rfilter.RFilterScreen
+#: import Home views.settings.SettingsScreen
+
+<MainWindow>:
+    spacing: dp(8)
+    canvas.before:
+        Color:
+            rgba: rgba('#ffffff')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        id: nav_menu
+        size_hint_x: .2 #0 - 1
+        orientation: 'vertical'
+        BoxLayout:
+            id: logo_nbox
+            size_hint_y: .15
+            padding: dp(8)
+            AnchorLayout:
+                anchor_x: 'right'
+                size_hint_x: None
+                width: dp(32)
+                IconButton:
+                    source: 'assets/icons/logo.ico'
+                    size_hint_y: None
+                    height: dp(32)
+            Text:
+                text: 'ATM Reporter'
+                font_name: app.fonts.heading
+                font_size: app.fonts.size.h4
+        GridLayout:
+            id: tabs_box
+            cols: 1
+            spacing: dp(4)
+            size_hint_y: .6
+            canvas.before:
+                Color:
+                    rgba: rgba("#c4c4c4")
+                Rectangle:
+                    pos: self.pos
+                    size: [self.size[0], dp(1)]
+            NavTab:
+                text: 'Dashboard'
+                state: 'down'
+                icon: 'assets/icons/ic_home.png'
+                icon_active: 'assets/icons/ic_home_active.png'
+                on_release: root.ids.scrn_mngr.current = 'scrn_dashboard'
+            NavTab:
+                text: 'Generated Reports'
+                icon: 'assets/icons/ic_reports.png'
+                icon_active: 'assets/icons/ic_reports_active.png'
+                on_release: root.ids.scrn_mngr.current = 'scrn_reports'
+            NavTab:
+                text: 'Report Filter'
+                icon: 'assets/icons/ic_filter.png'
+                icon_active: 'assets/icons/ic_filter_active.png'
+                on_release: root.ids.scrn_mngr.current = 'scrn_report_filter'
+            NavTab:
+                text: 'Sources'
+                icon: 'assets/icons/ic_source.png'
+                icon_active: 'assets/icons/ic_source_active.png'
+                on_release: root.ids.scrn_mngr.current = 'scrn_sources'
+            NavTab:
+                text: 'File Archives'
+                icon: 'assets/icons/ic_archives.png'
+                icon_active: 'assets/icons/ic_archives_active.png'
+                on_release: root.ids.scrn_mngr.current = 'scrn_archives'
+        GridLayout:
+            id: sec_box
+            size_hint_y: .3
+            cols: 1
+            padding: dp(12)
+            NavTab:
+                text: 'Help'
+                icon: 'assets/icons/ic_help.png'
+                icon_active: 'assets/icons/ic_help_active.png'
+            NavTab:
+                text: 'Settings'
+                icon: 'assets/icons/ic_settings.png'
+                icon_active: 'assets/icons/ic_settings_active.png'
+                on_release: root.ids.scrn_mngr.current = 'scrn_settings'
+            NavTab:
+                text: 'Shutdown'
+                icon: 'assets/icons/ic_power.png'
+                icon_active: 'assets/icons/ic_power_active.png'
+    BoxLayout:
+        size_hint_x: .85 #0 - 1
+        spacing: dp(8)
+        orientation: 'vertical'
+        padding: [dp(16), dp(8), dp(12), dp(8)]
+        canvas.before:
+            Color:
+                rgba: app.colors.grey_light
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        BoxLayout:
+            id: actionbar
+            size_hint_y: None
+            height: dp(54)
+            BoxLayout:
+                size_hint_x: .7
+                orientation: 'vertical'
+                Text:
+                    text: 'Standard Bank Eswatini'
+                    font_size: app.fonts.size.h3
+                    font_name: app.fonts.heading
+                    color: app.colors.secondary
+                    size_hint_y: .6
+                Text:
+                    text: root.dateToday
+                    font_size: app.fonts.size.h6
+                    font_name: app.fonts.subheading
+                    color: app.colors.grey_dark
+                    size_hint_y: .4
+            BoxLayout:
+                size_hint_x: .3
+                spacing: dp(8)
+                Widget:
+                AnchorLayout:
+                    ShadowBox:
+                        radius: [dp(5),dp(0),dp(10),dp(10)]
+                        size_hint: [None, None]
+                        size: [dp(42), dp(42)]
+                        elevation: 4
+                        Widget:
+                            canvas.before:
+                                Color:
+                                    rgba: app.colors.grey_light
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                                    source: root.logo
+                
+        BoxLayout:
+            size_hint_x: .98
+            spacing: dp(8)
+            orientation: 'vertical'
+            padding: [dp(16), dp(8), dp(12), dp(8)]
+            ScreenManager:
+                id: scrn_mngr
+                Screen:
+                    name: 'scrn_dashboard'
+                    Home:
+                        id: home
+                Screen:
+                    name: 'scrn_reports'
+                    ReportsScreen:
+                        id: reports
+                Screen:
+                    name: 'scrn_report_filter'
+                    RFilterScreen:
+                        id: rfilters
+                Screen:
+                    name: 'scrn_sources'
+                    SourcesScreen:
+                        id: sources
+                Screen:
+                    name: 'scrn_archives'
+                    ArchivesScreen:
+                        id: archives
+                Screen:
+                    name: 'scrn_settings'
+                    SettingsScreen:
+                        id: settings
+
+<NavTab>:
+    background_normal: ''
+    background_down: ''
+    background_color: [0,0,0,0]
+    group: 'tabs'
+    size_hint_y: None
+    height: dp(42)
+    spacing: dp(4)
+    canvas.before:
+        Color:
+            rgba: [0,0,0,0] if self.state == 'normal' else rgba("#E1F1FF")
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: [0,0,0,0] if self.state == 'normal' else rgba("#004785")
+        Rectangle:
+            pos: [self.pos[0]+(self.size[0]-dp(1)), self.pos[1]]
+            size: [dp(8), self.size[1]]
+    AnchorLayout:
+        size_hint_x: None
+        width: self.height
+        padding: [dp(28),dp(14),dp(0),dp(14)]
+        Widget:
+            canvas.before:
+                Color:
+                    rgba: [1,1,1,1]
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                    source: root.icon if root.state == 'normal' else root.icon_active
+    Text:
+        halign: 'left'
+        valign: 'middle'
+        text: root.text
+        color: rgba('c4c4c4') if root.state == 'normal' else app.colors.primary

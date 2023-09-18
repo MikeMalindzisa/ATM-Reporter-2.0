@@ -1,0 +1,232 @@
+<ReportsScreen>:
+    id: report_screen
+    padding: dp(14)
+    spacing: dp(16)
+    BoxLayout:
+        spacing: dp(16)
+        orientation: 'vertical'
+        size_hint_x: .75
+        BoxLayout:
+            spacing: dp(8)
+            size_hint_y: .5
+            orientation: 'vertical'
+            ShadowBox:
+                radius: [dp(14)]
+                elevation: 1
+                orientation: 'vertical'
+                spacing: dp(8)
+                padding: dp(12)
+                BoxLayout:
+                    spacing: dp(8)
+                    size_hint_y: None
+                    height: dp(42)
+                    BoxLayout:
+                        orientation: 'vertical'
+                        spacing: dp(8)
+                        size_hint_x: .8
+                        Text:
+                            text: 'Reports Browser'
+                            font_size: app.fonts.size.h2
+                            color: app.colors.secondary
+                            font_name: app.fonts.heading
+                        Text:
+                            text: 'Select a report for more information.'
+                            font_size: app.fonts.size.h6
+                            color: app.colors.secondary
+                            font_name: app.fonts.subheading
+                            size_hint_y: None
+                            height: dp(18)
+                    AnchorLayout:
+                        size_hint_x: .2
+
+                TabbedPanel:
+                    do_default_tab: False
+                    TabbedPanelItem:
+                        text: 'List View'
+                        BoxLayout:
+                            orientation: 'vertical'
+                            XLSXFileChooserList:
+                                id: file_chooser
+                                report_screen: report_screen
+                                path: 'reports'
+                    TabbedPanelItem:
+                        text: 'Icon View'
+                        BoxLayout:
+                            orientation: 'vertical'
+                            XLSXFileChooserIcon:
+                                path: 'reports'
+                                report_screen: report_screen
+                                filter_dirs: True
+    BoxLayout:
+        size_hint_x: .25
+        size_hint_y: 1
+        orientation: 'vertical'
+        ShadowBox:
+            radius: [dp(14)]
+            elevation: 1
+            orientation: 'vertical'
+            spacing: dp(8)
+            size_hint_y: .50
+            padding: dp(12)
+
+            Text:
+                text: 'Selected File Options'
+                font_size: app.fonts.size.h6
+                color: app.colors.secondary
+                font_name: app.fonts.subheading
+                size_hint_y: .1
+                height: dp(18)
+                id: selected_report_name
+                font_name: 'assets/fonts/Roboto/Roboto-Regular.ttf'
+
+
+            Text:
+                text: 'No selected file.'
+                font_size: app.fonts.size.h6
+                color: app.colors.secondary
+                font_name: app.fonts.subheading
+                id: reports_count
+                size_hint_y: .1
+                size_hint_x: .99
+                font_name: 'assets/fonts/Roboto/Roboto-Regular.ttf'
+            BoxLayout:
+                orientation: 'horizontal'
+                padding: 10
+                spacing: dp(8)
+                size_hint_y: .5
+                MDFillRoundFlatIconButton:
+                    id: download_report_file
+                    text: "Show in Folder"
+                    icon: "assets/icons/ic_source.png"
+                    md_bg_color: rgba("#F2C94C")
+                    text_color: rgba("#a1a1a1")
+                    border: 5, 5, 5, 5
+                    disabled: True
+                MDFillRoundFlatIconButton:
+                    id: open_excel_report_file
+                    text: 'Open In Excel'
+                    icon: "assets/icons/ic_excel.png"
+                    text_color: rgba("#a1a1a1")
+                    md_bg_color: rgba("#1FC98E")
+                    border: 5, 5, 5, 5
+                    disabled: True
+            BoxLayout:
+                orientation: 'horizontal'
+                padding: 10
+                size_hint_y: .5
+                Text:
+                    text: '• Date Created: '
+                    font_size: app.fonts.size.h6
+                    color: app.colors.secondary
+                    font_name: app.fonts.heading
+                    size_hint_y: None
+                    height: dp(18)
+                    bold: True
+                    font_name: 'assets/fonts/Roboto/Roboto-Regular.ttf'
+
+                Text:
+                    text: 'No file selected'
+                    font_size: app.fonts.size.h6
+                    color: app.colors.secondary
+                    font_name: app.fonts.subheading
+                    size_hint_y: None
+                    height: dp(18)
+                    id: report_date
+                    font_name: 'assets/fonts/Roboto/Roboto-Regular.ttf'
+            BoxLayout:
+                orientation: 'horizontal'
+                padding: 10
+                size_hint_y: .1
+                Text:
+                    text: '• File Size: '
+                    font_size: app.fonts.size.h6
+                    color: app.colors.secondary
+                    font_name: app.fonts.heading
+                    size_hint_y: None
+                    height: dp(18)
+                    bold: True
+                    font_name: 'assets/fonts/Roboto/Roboto-Regular.ttf'
+
+                Text:
+                    text: 'No file selected'
+                    font_size: app.fonts.size.h6
+                    color: app.colors.secondary
+                    font_name: app.fonts.subheading
+                    size_hint_y: None
+                    height: dp(18)
+                    id: file_size
+                    font_name: 'assets/fonts/Roboto/Roboto-Regular.ttf'
+            BoxLayout:
+                orientation: 'horizontal'
+                padding: 10
+                size_hint_y: .1
+                Text:
+                    text: '• ATM Count: '
+                    font_size: app.fonts.size.h6
+                    color: app.colors.secondary
+                    font_name: app.fonts.heading
+                    size_hint_y: None
+                    height: dp(18)
+                    bold: True
+                    font_name: 'assets/fonts/Roboto/Roboto-Regular.ttf'
+
+                Text:
+                    text: 'No file selected'
+                    font_size: app.fonts.size.h6
+                    color: app.colors.secondary
+                    font_name: app.fonts.subheading
+                    size_hint_y: None
+                    height: dp(18)
+                    id: atm_count
+                    font_name: 'assets/fonts/Roboto/Roboto-Regular.ttf'
+            BoxLayout:
+                orientation: 'horizontal'
+                padding: 10
+                size_hint_y: .1
+                Text:
+                    text: '• Average Downtime: '
+                    font_size: app.fonts.size.h6
+                    color: app.colors.secondary
+                    font_name: app.fonts.heading
+                    size_hint_y: None
+                    height: dp(18)
+                    bold: True
+                    font_name: 'assets/fonts/Roboto/Roboto-Regular.ttf'
+
+                Text:
+                    text: 'No file selected'
+                    font_size: app.fonts.size.h6
+                    color: app.colors.secondary
+                    font_name: app.fonts.subheading
+                    size_hint_y: None
+                    height: dp(18)
+                    id: avg_downtime_percent
+                    font_name: 'assets/fonts/Roboto/Roboto-Regular.ttf'
+            BoxLayout:
+                orientation: 'horizontal'
+                padding: 10
+                size_hint_y: .1
+                Text:
+                    text: '• Downtime(H:M:S): '
+                    font_size: app.fonts.size.h6
+                    color: app.colors.secondary
+                    font_name: app.fonts.heading
+                    size_hint_y: None
+                    height: dp(18)
+                    bold: True
+                    font_name: 'assets/fonts/Roboto/Roboto-Regular.ttf'
+
+                Text:
+                    text: 'No file selected'
+                    font_size: app.fonts.size.h6
+                    color: app.colors.secondary
+                    font_name: app.fonts.subheading
+                    size_hint_y: None
+                    height: dp(18)
+                    id: down_time
+                    font_name: 'assets/fonts/Roboto/Roboto-Regular.ttf'
+
+
+
+        AnchorLayout:
+            size_hint_y: .50
