@@ -8,9 +8,10 @@ from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.filechooser import FileChooserListView, FileChooserIconView
 
+import app
 from config import ConfigReader
 
-Builder.load_file('views/sources/sources.kv')
+Builder.load_file(app.resource_path('views/sources/sources.kv'))
 
 
 def natural_key(path):

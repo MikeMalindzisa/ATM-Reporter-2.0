@@ -18,9 +18,10 @@ from kivymd.uix.progressbar import MDProgressBar
 from kivymd.uix.spinner import MDSpinner
 from openpyxl.workbook import Workbook
 
+import app
 from config import ConfigReader
 
-Builder.load_file('views/rfilter/rfilter.kv')
+Builder.load_file(app.resource_path('views/rfilter/rfilter.kv'))
 
 report_data = None
 
@@ -228,7 +229,7 @@ class RFilterScreen(BoxLayout):
         if not self.dialog:
             open_excel_button = MDFillRoundFlatIconButton(
                 text="Open in Excel",
-                icon="assets/icons/ic_excel.png",
+                icon=app.resource_path("assets/icons/ic_excel.png"),
                 text_color=rgba("#a1a1a1"),
                 md_bg_color=rgba("#1FC98E"),
                 on_release=lambda x: self.open_in_excel(export_path)
@@ -245,7 +246,7 @@ class RFilterScreen(BoxLayout):
                 buttons=[
                     MDFillRoundFlatIconButton(
                         text="Show in Folder",
-                        icon="assets/icons/ic_source.png",
+                        icon=app.resource_path("assets/icons/ic_source.png"),
                         md_bg_color=rgba("#F2C94C"),
                         text_color=rgba("#a1a1a1"),
                         on_release=lambda x: self.show_in_folder(export_path)

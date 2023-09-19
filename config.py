@@ -10,12 +10,15 @@ from watchdog.events import FileSystemEventHandler
 
 import pymysql
 
+import app
+
 atm_section_pattern = re.compile(r"UPTIME TOTALS FOR ATM (\d+)")
 atm_summary_section_pattern = re.compile(r"ACCUMULATED UPTIME TOTALS FOR *ALL* ATMS")
 
 
+
 def log_message(message):
-    log_file = "sys_log.log"
+    log_file = app.resource_path("sys_log.log")
     logging.basicConfig(filename=log_file, level=logging.INFO,
                         format="%(asctime)s - %(levelname)s - %(message)s")
     logging.info(message)
@@ -217,7 +220,7 @@ class MyHandler(FileSystemEventHandler):
 
 class ConfigReader:
     def __init__(self):
-        self.xml_file = "config.xml"
+        self.xml_file = app.resource_path("config.xml")
         self.sys_config = {}  # Initialize an empty dictionary to store the configuration
         self._observer_state = False
 
@@ -274,13 +277,13 @@ class ConfigReader:
         observer = eT.SubElement(root_element, "state")
         observer.text = state
         tree = eT.ElementTree(root_element)
-        tree.write("observer.xml", encoding="utf-8", xml_declaration=True)
+        tree.write(app.resource_path("observer.xml"), encoding="utf-8", xml_declaration=True)
 
     def get_state(self):
 
         if not os.path.exists("observer.xml"):
             self.observer_sate("Off")
-        tree = eT.parse("observer.xml")
+        tree = eT.parse(app.resource_path("observer.xml"))
         root = tree.getroot()
 
         state_element = root.find("state")

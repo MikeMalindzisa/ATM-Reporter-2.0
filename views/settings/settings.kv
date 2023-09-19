@@ -110,7 +110,7 @@
                         size_hint_x: None
                         width: self.height
                         IconButton:
-                            source: 'assets/icons/ic_power_active.png'
+                            source: app.resource_path('assets/icons/ic_power_active.png')
                     BoxLayout:
                         orientation: 'horizontal'
                         spacing: dp(8)
@@ -145,14 +145,14 @@
 
                     MDFillRoundFlatIconButton:
                         id: watchdog_service_start
-                        icon: "assets/icons/ic_power_on.png"
+                        icon: app.resource_path("assets/icons/ic_power_on.png")
                         text: "Start Service"
                         on_release: root.start_watchdog_service()
                         md_bg_color: app.colors.success
 
                     MDFillRoundFlatIconButton:
                         id: watchdog_service_stop
-                        icon: "assets/icons/ic_power.png"
+                        icon: app.resource_path("assets/icons/ic_power.png")
                         text: "Stop Service"
                         md_bg_color: app.colors.warning
                         disabled: True
@@ -175,7 +175,7 @@
                             size_hint_x: None
                             width: self.height
                             IconButton:
-                                source: 'assets/icons/ic_settings_default.png'
+                                source: app.resource_path('assets/icons/ic_settings_default.png')
                         BoxLayout:
                             orientation: 'horizontal'
                             spacing: dp(8)

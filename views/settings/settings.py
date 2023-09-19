@@ -10,10 +10,10 @@ from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.label import MDLabel
 
-from app import MainApp
+import app
 from config import ConfigReader
 
-Builder.load_file('views/settings/settings.kv')
+Builder.load_file(app.resource_path('views/settings/settings.kv'))
 
 
 def toggle_checkbox(checkbox):
@@ -177,4 +177,4 @@ class SettingsScreen(BoxLayout):
         # Close the current instance of the app
         self.stop()
         # Launch a new instance of the app
-        MainApp().run()
+        app.MainApp().run()

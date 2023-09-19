@@ -1,9 +1,20 @@
 import os
+import sys
+
 from kivy.utils import QueryDict, rgba
 from kivy.metrics import dp, sp
 from kivymd.app import MDApp
 
 from .view import MainWindow
+
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 
 class MainApp(MDApp):
@@ -27,9 +38,18 @@ class MainApp(MDApp):
     fonts.size.h5 = dp(14)
     fonts.size.h6 = dp(12)
 
-    fonts.heading = 'assets/fonts/Roboto/Roboto-Bold.ttf'
-    fonts.subheading = 'assets/fonts/Roboto/Roboto-Regular.ttf'
-    fonts.body = 'assets/fonts/Roboto/Roboto-Light.ttf'
+    fonts.heading = resource_path('assets/fonts/Roboto/Roboto-Bold.ttf')
+    fonts.subheading = resource_path('assets/fonts/Roboto/Roboto-Regular.ttf')
+    fonts.body = resource_path('assets/fonts/Roboto/Roboto-Light.ttf')
+
+    @staticmethod
+    def resource_path(relative_path):
+        try:
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path, relative_path)
 
     def build(self):
         return MainWindow()
