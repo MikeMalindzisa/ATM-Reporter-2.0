@@ -184,7 +184,6 @@ class RFilterScreen(BoxLayout):
         report_name = self.ids.start_date.text + "-to-" + self.ids.end_date.text
         workbook = Workbook()
         sheet = workbook.active
-        print(report_data)
         file_path = self.config.get("reports_folder") + "/" + report_name + ".xlsx"
         if report_data is not None:
             if isinstance(report_data, tuple):
@@ -220,6 +219,43 @@ class RFilterScreen(BoxLayout):
             def export():
                 for row in report_data:
                     sheet.append(row)
+
+                # Calculate the average uptime for FIBRE and LTE, treating empty values as 0
+                fibre_values = [float(row[2]) if row[2] else 0.0 for row in report_data if row[1] == "FIBRE"]
+                lte_values = [float(row[2]) if row[2] else 0.0 for row in report_data if row[1] == "LTE"]
+
+                # Check if there are any values before calculating the average
+                if fibre_values:
+                    fibre_average = sum(fibre_values) / len(fibre_values)
+                else:
+                    fibre_average = 0.0
+
+                if lte_values:
+                    lte_average = sum(lte_values) / len(lte_values)
+                else:
+                    lte_average = 0.0
+
+                # Create a new sheet for calculations
+                calculation_sheet = workbook.create_sheet(title="Calculations")
+                # lte_formula = f'=AVERAGEIFS(Sheet!$C$2:$C${len(report_data) + 1};Sheet!$B$2:$B${len(report_data) +
+                # 1};"LTE")' fibre_formula = f'=AVERAGEIFS(Sheet!$C$2:$C${len(report_data) + 1};Sheet!$B$2:$B${len(
+                # report_data) + 1};"FIBRE")'
+
+                # Add headers
+                calculation_sheet['A1'] = "REPORT"
+                calculation_sheet['B1'] = "FIBRE"
+                calculation_sheet['C1'] = "LTE"
+                calculation_sheet['D1'] = "ALL ATMs"
+                calculation_sheet['E1'] = "SLA"
+
+                # Write the calculated averages to the sheet
+                calculation_sheet['A2'] = report_name
+                calculation_sheet['B2'] = fibre_average
+                calculation_sheet['C2'] = lte_average
+                calculation_sheet['D2'] = f"=AVERAGE(B2:C2)"
+                calculation_sheet['E2'] = 98.4
+
+                # Save the workbook
                 workbook.save(file_path)
 
             from threading import Thread
