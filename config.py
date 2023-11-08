@@ -38,6 +38,9 @@ def parse_uptime_data(data):
 
     for index, line in enumerate(lines):
         match = atm_section_pattern.search(line)
+        if "Standard Bank Swaziland Ltd             ATM UPTIME SUMMARY " in line:
+            temp_columns = line.split()
+            date_since = temp_columns[-5]
         if match:
             if atm_id is not None:
                 if not downtime_reasons:
@@ -171,7 +174,7 @@ def process_file(file_path):
                         insert_query = """INSERT INTO atm_data (atm_id, rec_sha_key, uptime_percent, 
                         t_downtime_percent, total_downtime, downtime_info, date_since) VALUES (%s, %s, %s, %s, %s, 
                         %s, %s)"""
-
+                        fdat = '2023-10-13'
                         # Execute the SQL query
                         cursor.execute(insert_query, (
                             atm_id, rec_sha_key, uptime_percent, t_downtime_percent,
@@ -205,7 +208,7 @@ def process_file(file_path):
         log_message(
             f"\nProcessing new source file.\nSOURCE FILE NAME  >> {os.path.basename(file_path)}\n"
             f"SOURCES HOME >> {config_p.get('source_folder')}\n")
-        log_message(f"Error processing file: {os.path.basename(file_path)}")
+        log_message(f"Error processing file: {os.path.basename(file_path)}: {e}")
         log_message(f"Error message: {str(e)}")
         log_message(
             f"########################## FILE IN TASK: {os.path.basename(file_path)} >> COMPLETED << "
